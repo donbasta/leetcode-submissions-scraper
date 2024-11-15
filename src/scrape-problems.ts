@@ -1,9 +1,12 @@
+import { Browser } from 'puppeteer';
 import { init, loadCookiesFromFile } from './utils';
 import fs from 'fs';
 
 export async function scrapeProblems(fname: string = 'problems.json') {
+  let b: Browser | null = null;
   try {
     const { browser, page } = await init();
+    b = browser;
 
     const cookiePath = './leetcode.com.cookies.json';
     await loadCookiesFromFile(page, cookiePath);
@@ -83,8 +86,11 @@ export async function scrapeProblems(fname: string = 'problems.json') {
       }
     }
     console.log('successfully scrape all problems');
-    await browser.close();
   } catch (err) {
     console.error(`[scrapeProblems(${fname}$)]: ${err}`);
+  } finally {
+    if (b) {
+      await b.close();
+    }
   }
 }

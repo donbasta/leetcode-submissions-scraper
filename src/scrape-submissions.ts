@@ -7,14 +7,17 @@ import {
   problem_title_to_number,
 } from './utils';
 import path from 'path';
+import { Browser } from 'puppeteer';
 
 export async function scrapeSubmissions(
   submission_folder: string,
   fname: string = 'problems.json',
   from: number | null = null
 ) {
+  let b: Browser | null = null;
   try {
     const { browser, page } = await init();
+    b = browser;
 
     // Load pre-taken cookie from logged-in browser to log in
     const cookiePath = './leetcode.com.cookies.json';
@@ -48,7 +51,7 @@ export async function scrapeSubmissions(
         continue;
       }
 
-      let problemPage = await browser.newPage();
+      let problemPage = await b.newPage();
       await problemPage.goto(problem.href);
       await problemPage.waitForSelector('#description_tabbar_outer');
       const tabBarElement = await problemPage.$('#description_tabbar_outer');
@@ -141,10 +144,14 @@ export async function scrapeSubmissions(
       }
       await problemPage.close();
     }
-    await browser.close();
+    await b.close();
   } catch (err) {
     console.error(
       `[scrapeSubmissions(${submission_folder}$, ${fname}$, ${from}$)]: ${err}`
     );
+  } finally {
+    if (b) {
+      await b.close();
+    }
   }
 }

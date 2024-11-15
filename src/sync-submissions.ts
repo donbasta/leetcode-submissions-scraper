@@ -27,11 +27,12 @@ export async function syncSubmissions(
           } else {
             const problem_number = fullPath.split('/').at(-1)?.split('.').at(0);
             if (problem_number === undefined) continue;
+            if (!(problem_number in id_to_problem)) continue;
             id_to_problem[problem_number].is_submission_scraped = true;
           }
         }
       } catch (err) {
-        console.error(`[traverseSubmissions(${submission_folder}$)]: ${err}`);
+        console.error(`[traverseSubmissions(${submission_folder})]: ${err}`);
       }
     };
 
