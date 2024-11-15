@@ -8,16 +8,13 @@ A scraper written in Typescript for scraping all your leetcode submissions, made
 
 2. Copy the json file containing the cookie to the root of this repo, and rename it into `leetcode.com.cookies.json`
 
-3. Scrape the problem informations from the leetcode problemset page. The information is stored as `Problem` type, whose definition is in `types.ts`. To run, simply execute the below command (the argument variables is not necessary (if not supplied, the default value `problems.json` will be used))
+3. The flow of the scrapper is as follows:
+   - Scrape all problems info from the Problemset page.
+   - Determine the problems that need to be scrapped based on submission status (obtained from the previous step), and the local submissions directory.
+   - Scrape the accepted submissions which does not yet exist in the local submissions directory.
+
+Run the following script to perform all the steps above:
 
 ```
-npm run getProblems <problems_info.json>
-```
-
-4. Scrape each submission of the problems list which is obtained in the previous step. You can choose to select from any index by supplying an optional argument variables in the first position,
-   and also choose the problems information json file name in the second argument variables. Before executing the command, create `submissions` directory in the repo root with three sub-directories
-   `Easy`, `Medium`, and `Hard`. The submissions will be stored with format `<problem_number>.<language_extension>`
-
-```
-npm run getSubmissions <index_to_start> <problems_info.json>
+npm run start <local submissions root directory path> <json file path to save the problem info>
 ```

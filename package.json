@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "getProblems": "tsc && node dist/scrape-problems.js",
-    "getSubmissions": "tsc && node dist/scrape-submissions.js"
+    "getSubmissions": "tsc && node dist/scrape-submissions.js",
+    "syncSubmissions": "tsc && node dist/sync-submissions.js",
+    "start": "tsc && node dist/run.js"
   },
   "repository": {
     "type": "git",

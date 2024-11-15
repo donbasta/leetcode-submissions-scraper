@@ -7,4 +7,5 @@ interface Problem {
   source_code: string | null;
   href: string | null;
   is_premium: boolean | null;
+  is_submission_scraped: boolean | null;
 }

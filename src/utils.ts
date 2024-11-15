@@ -49,3 +49,15 @@ export async function getElementAttributes(elementHandle: ElementHandle) {
   });
   return elementInfo;
 }
+
+export function loadProblems(fname: string) {
+  const buffer = fs.readFileSync(fname);
+  const jsonString = buffer.toString('utf-8');
+  const problems: Problem[] = JSON.parse(jsonString);
+  return problems;
+}
+
+export function problem_title_to_number(title: string): string {
+  const tmp = title.split(' ')[0];
+  return tmp.slice(0, tmp.length - 1);
+}
